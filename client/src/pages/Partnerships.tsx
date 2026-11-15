@@ -24,6 +24,8 @@ import {
   Sparkles,
   Users2,
   Lock,
+  AlertCircle,
+  Loader2,
 } from "lucide-react";
 import {
   whyPartnerData,
@@ -64,6 +66,12 @@ export default function Partnerships() {
   const [timelineScope, setTimelineScope] = useState("");
   const [additionalNotes, setAdditionalNotes] = useState("");
   const [authorizedConsent, setAuthorizedConsent] = useState(false);
+
+  // Submission state
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitErrorMessage, setSubmitErrorMessage] = useState("");
+  const [botcheck, setBotcheck] = useState(false);
 
   // UI state
   const [copied, setCopied] = useState(false);
@@ -181,6 +189,67 @@ Authorization Declaration: Confirmed authorized representation and acceptance of
     navigator.clipboard.writeText(compiledProposalText);
     setCopied(true);
     setTimeout(() => setCopied(false), 3500);
+  };
+
+  const handlePartnershipSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormAttempted(true);
+
+    if (!isFormValid) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+    setSubmitErrorMessage("");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "ae6f8ffa-1ea5-4acf-b1c4-71ec3ce86a3c",
+          subject: "New Institutional Partnership Proposal — Atlas AI Institute",
+          from_name: "Atlas AI Institute Partnerships",
+          organization_name: orgName.trim(),
+          organization_type: orgType,
+          country: country.trim(),
+          website: website.trim(),
+          email: officialEmail.trim(),
+          contact_person: contactPerson.trim(),
+          designation: designation.trim(),
+          partnership_category: selectedCategory,
+          thematic_areas: selectedThematicArea,
+          proposed_collaboration: collaborationSummary.trim(),
+          expected_contribution: contribution.trim(),
+          expected_outcomes: expectedImpact.trim(),
+          proposed_timeline: timelineScope.trim(),
+          additional_information: additionalNotes.trim(),
+          botcheck: botcheck ? "spambot" : "",
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setSubmitStatus("success");
+      } else {
+        setSubmitStatus("error");
+        setSubmitErrorMessage(
+          result.message ||
+            "Your partnership proposal could not be submitted. Please try again or contact contact@atlasai.institute."
+        );
+      }
+    } catch {
+      setSubmitStatus("error");
+      setSubmitErrorMessage(
+        "Your partnership proposal could not be submitted. Please try again or contact contact@atlasai.institute."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const filteredModels = useMemo(() => {
@@ -531,325 +600,331 @@ Authorization Declaration: Confirmed authorized representation and acceptance of
             <div className="form-heading">
               <div>
                 <p className="eyebrow">Institutional Expression of Interest</p>
-                <h2>Partnership Proposal &amp; Enquiry Form</h2>
+                <h2>Propose an Institutional Partnership</h2>
                 <p>
-                  Submit your institutional details and collaboration concept.
-                  Our Partnerships Directorate will review your submission and
-                  initiate exploratory discussions.
+                  Tell us about your organization and the collaboration you would
+                  like to explore with Atlas AI Institute.
                 </p>
               </div>
             </div>
 
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setFormAttempted(true);
-                if (isFormValid) {
-                  // Direct email dispatch or copy
-                  window.location.href = mailtoLink;
-                }
-              }}
-              noValidate
-            >
-              <div className="form-subheading">
-                <Building2 size={18} />
-                <span>1. Organization &amp; Institutional Profile</span>
+            {submitStatus === "success" ? (
+              <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "12px", padding: "32px", textAlign: "center", color: "#166534", marginTop: "20px" }}>
+                <CheckCircle2 size={42} style={{ margin: "0 auto 16px", color: "#22c55e" }} />
+                <h3 style={{ fontWeight: 700, marginBottom: "12px", color: "#14532d" }}>Proposal Submitted Successfully</h3>
+                <p style={{ fontSize: "14.5px", lineHeight: "1.7" }}>
+                  Thank you for your interest in partnering with Atlas AI Institute. Your proposal has been submitted successfully for institutional review. Submission does not automatically establish a partnership.
+                </p>
+                <button
+                  type="button"
+                  className="button primary"
+                  style={{ marginTop: "20px" }}
+                  onClick={() => {
+                    setSubmitStatus("idle");
+                    setFormAttempted(false);
+                  }}
+                >
+                  Submit Another Proposal
+                </button>
               </div>
+            ) : (
+              <form onSubmit={handlePartnershipSubmit} noValidate>
+                {/* Honeypot */}
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  checked={botcheck}
+                  onChange={(e) => setBotcheck(e.target.checked)}
+                  style={{ display: "none" }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                />
 
-              <div className="form-grid">
-                <label>
-                  Organization Name *
-                  <input
-                    type="text"
-                    required
-                    value={orgName}
-                    onChange={(e) => setOrgName(e.target.value)}
-                    placeholder="e.g., Global Digital Rights Alliance"
-                  />
-                  {formAttempted && !orgName.trim() && (
-                    <span className="field-error">Organization name is required.</span>
-                  )}
-                </label>
+                <div className="form-subheading">
+                  <Building2 size={18} />
+                  <span>1. Organization &amp; Institutional Profile</span>
+                </div>
 
-                <label>
-                  Organization Type *
-                  <select
-                    value={orgType}
-                    onChange={(e) => setOrgType(e.target.value)}
-                  >
-                    <option value="International NGO">International NGO</option>
-                    <option value="Multilateral / UN Agency">Multilateral / UN Agency</option>
-                    <option value="University / Academic Institution">
-                      University / Academic Institution
-                    </option>
-                    <option value="Government / Public Sector Agency">
-                      Government / Public Sector Agency
-                    </option>
-                    <option value="Technology / AI Enterprise">
-                      Technology / AI Enterprise
-                    </option>
-                    <option value="School / College Network">
-                      School / College Network
-                    </option>
-                    <option value="Corporate Foundation / CSR Program">
-                      Corporate Foundation / CSR Program
-                    </option>
-                    <option value="Media & Knowledge Publisher">
-                      Media &amp; Knowledge Publisher
-                    </option>
-                    <option value="Civil Society Coalition">
-                      Civil Society Coalition
-                    </option>
-                    <option value="Independent Expert Network">
-                      Independent Expert Network
-                    </option>
-                    <option value="Other">Other</option>
-                  </select>
-                </label>
+                <div className="form-grid">
+                  <label>
+                    Organization Name *
+                    <input
+                      type="text"
+                      required
+                      value={orgName}
+                      onChange={(e) => setOrgName(e.target.value)}
+                      placeholder="e.g., Global Digital Rights Alliance"
+                    />
+                    {formAttempted && !orgName.trim() && (
+                      <span className="field-error">Organization name is required.</span>
+                    )}
+                  </label>
 
-                <label>
-                  Country / Jurisdiction *
-                  <input
-                    type="text"
-                    required
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                    placeholder="e.g., Bangladesh, United Kingdom, USA"
-                  />
-                  {formAttempted && !country.trim() && (
-                    <span className="field-error">Country or jurisdiction is required.</span>
-                  )}
-                </label>
+                  <label>
+                    Organization Type *
+                    <select
+                      value={orgType}
+                      onChange={(e) => setOrgType(e.target.value)}
+                    >
+                      <option value="NGO / Nonprofit">NGO / Nonprofit</option>
+                      <option value="Government Institution">Government Institution</option>
+                      <option value="UN / International Organization">UN / International Organization</option>
+                      <option value="University / Research Institution">University / Research Institution</option>
+                      <option value="School / College">School / College</option>
+                      <option value="Technology / AI Company">Technology / AI Company</option>
+                      <option value="Corporate / CSR">Corporate / CSR</option>
+                      <option value="Women's Rights Organization">Women&apos;s Rights Organization</option>
+                      <option value="Digital Rights Organization">Digital Rights Organization</option>
+                      <option value="Foundation / Development Organization">Foundation / Development Organization</option>
+                      <option value="Media Organization">Media Organization</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </label>
 
-                <label>
-                  Official Website *
-                  <input
-                    type="url"
-                    required
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                    placeholder="https://example.org"
-                  />
-                  {formAttempted && !website.trim() && (
-                    <span className="field-error">Official website is required.</span>
-                  )}
-                </label>
+                  <label>
+                    Country / Jurisdiction *
+                    <input
+                      type="text"
+                      required
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                      placeholder="e.g., Bangladesh, United Kingdom, USA"
+                    />
+                    {formAttempted && !country.trim() && (
+                      <span className="field-error">Country or jurisdiction is required.</span>
+                    )}
+                  </label>
 
-                <label>
-                  Official Contact Email *
-                  <input
-                    type="email"
-                    required
-                    value={officialEmail}
-                    onChange={(e) => setOfficialEmail(e.target.value)}
-                    placeholder="partnerships@example.org"
-                  />
-                  {formAttempted && !officialEmail.trim() && (
-                    <span className="field-error">Official email is required.</span>
-                  )}
-                </label>
+                  <label>
+                    Organization Website (Optional)
+                    <input
+                      type="url"
+                      value={website}
+                      onChange={(e) => setWebsite(e.target.value)}
+                      placeholder="https://example.org"
+                    />
+                  </label>
 
-                <label>
-                  Primary Contact Person *
-                  <input
-                    type="text"
-                    required
-                    value={contactPerson}
-                    onChange={(e) => setContactPerson(e.target.value)}
-                    placeholder="Full name of representative"
-                  />
-                  {formAttempted && !contactPerson.trim() && (
-                    <span className="field-error">Contact person is required.</span>
-                  )}
-                </label>
+                  <label>
+                    Official Organization Email *
+                    <input
+                      type="email"
+                      required
+                      value={officialEmail}
+                      onChange={(e) => setOfficialEmail(e.target.value)}
+                      placeholder="partnerships@example.org"
+                    />
+                    {formAttempted && !officialEmail.trim() && (
+                      <span className="field-error">Official organization email is required.</span>
+                    )}
+                  </label>
 
-                <label className="wide">
-                  Designation / Institutional Title *
-                  <input
-                    type="text"
-                    required
-                    value={designation}
-                    onChange={(e) => setDesignation(e.target.value)}
-                    placeholder="e.g., Director of Digital Rights, Head of CSR, Professor of Ethics"
-                  />
-                  {formAttempted && !designation.trim() && (
-                    <span className="field-error">Designation is required.</span>
-                  )}
-                </label>
-              </div>
+                  <label>
+                    Contact Person&apos;s Name *
+                    <input
+                      type="text"
+                      required
+                      value={contactPerson}
+                      onChange={(e) => setContactPerson(e.target.value)}
+                      placeholder="Full name of representative"
+                    />
+                    {formAttempted && !contactPerson.trim() && (
+                      <span className="field-error">Contact person&apos;s name is required.</span>
+                    )}
+                  </label>
 
-              <div className="form-subheading" style={{ marginTop: 28 }}>
-                <Sparkles size={18} />
-                <span>2. Proposal &amp; Collaboration Concept</span>
-              </div>
+                  <label className="wide">
+                    Designation / Position *
+                    <input
+                      type="text"
+                      required
+                      value={designation}
+                      onChange={(e) => setDesignation(e.target.value)}
+                      placeholder="e.g., Director of Digital Rights, Head of CSR, Professor of Ethics"
+                    />
+                    {formAttempted && !designation.trim() && (
+                      <span className="field-error">Designation / position is required.</span>
+                    )}
+                  </label>
+                </div>
 
-              <div className="form-grid">
-                <label>
-                  Partnership Category Track *
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                  >
-                    {partnershipCategoriesData.map((c) => (
-                      <option key={c.id} value={c.title}>
-                        {c.title}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                <div className="form-subheading" style={{ marginTop: 28 }}>
+                  <Sparkles size={18} />
+                  <span>2. Proposal &amp; Collaboration Concept</span>
+                </div>
 
-                <label>
-                  Primary Thematic Area *
-                  <select
-                    value={selectedThematicArea}
-                    onChange={(e) => setSelectedThematicArea(e.target.value)}
-                  >
-                    {thematicAreasData.map((t) => (
-                      <option key={t.id} value={t.title}>
-                        {t.title}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                <div className="form-grid">
+                  <label>
+                    Partnership Category *
+                    <select
+                      value={selectedCategory}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                    >
+                      <option value="Strategic Institutional Partnership">Strategic Institutional Partnership</option>
+                      <option value="Development Partnership">Development Partnership</option>
+                      <option value="Academic and Research Collaboration">Academic and Research Collaboration</option>
+                      <option value="Government and Public Sector Collaboration">Government and Public Sector Collaboration</option>
+                      <option value="Technology and AI Collaboration">Technology and AI Collaboration</option>
+                      <option value="School and College Partnership">School and College Partnership</option>
+                      <option value="Corporate and CSR Partnership">Corporate and CSR Partnership</option>
+                      <option value="Media and Knowledge Partnership">Media and Knowledge Partnership</option>
+                      <option value="Expert and Professional Collaboration">Expert and Professional Collaboration</option>
+                    </select>
+                  </label>
 
-                <label className="wide">
-                  Proposed Timeline &amp; Geographic Scope *
-                  <input
-                    type="text"
-                    required
-                    value={timelineScope}
-                    onChange={(e) => setTimelineScope(e.target.value)}
-                    placeholder="e.g., 12-Month Pilot across Dhaka & Chittagong; Global 2-Year Research Grant"
-                  />
-                  {formAttempted && !timelineScope.trim() && (
-                    <span className="field-error">Timeline and geographic scope are required.</span>
-                  )}
-                </label>
+                  <label>
+                    Thematic Areas (Optional)
+                    <select
+                      value={selectedThematicArea}
+                      onChange={(e) => setSelectedThematicArea(e.target.value)}
+                    >
+                      <option value="Women's Digital Safety">Women&apos;s Digital Safety</option>
+                      <option value="AI Safety and Responsible AI">AI Safety and Responsible AI</option>
+                      <option value="Cybersecurity">Cybersecurity</option>
+                      <option value="Digital Rights and Privacy">Digital Rights and Privacy</option>
+                      <option value="Deepfake Awareness">Deepfake Awareness</option>
+                      <option value="Research and Policy">Research and Policy</option>
+                      <option value="Digital Literacy">Digital Literacy</option>
+                      <option value="Education and Capacity Building">Education and Capacity Building</option>
+                    </select>
+                  </label>
 
-                <label className="wide">
-                  Proposed Collaboration Summary * (minimum 20 characters)
-                  <textarea
-                    required
-                    rows={4}
-                    value={collaborationSummary}
-                    onChange={(e) => setCollaborationSummary(e.target.value)}
-                    placeholder="Describe the nature of the partnership, joint activities, intended target groups, and core alignment with Women Safety in the AI Era."
-                  />
-                  {formAttempted && collaborationSummary.trim().length < 20 && (
-                    <span className="field-error">
-                      Please provide a clear collaboration summary (at least 20 characters).
+                  <label className="wide">
+                    Proposed Timeline (Optional)
+                    <input
+                      type="text"
+                      value={timelineScope}
+                      onChange={(e) => setTimelineScope(e.target.value)}
+                      placeholder="e.g., 12-Month Pilot across Dhaka & Chittagong; Global 2-Year Research Grant"
+                    />
+                  </label>
+
+                  <label className="wide">
+                    Proposed Collaboration * (minimum 20 characters)
+                    <textarea
+                      required
+                      rows={4}
+                      value={collaborationSummary}
+                      onChange={(e) => setCollaborationSummary(e.target.value)}
+                      placeholder="Describe the nature of the partnership, joint activities, intended target groups, and core alignment with Women Safety in the AI Era."
+                    />
+                    {formAttempted && collaborationSummary.trim().length < 20 && (
+                      <span className="field-error">
+                        Please provide a clear proposed collaboration summary (at least 20 characters).
+                      </span>
+                    )}
+                  </label>
+
+                  <label className="wide">
+                    Expected Contribution (Optional)
+                    <textarea
+                      rows={3}
+                      value={contribution}
+                      onChange={(e) => setContribution(e.target.value)}
+                      placeholder="Detail the technical expertise, staff time, funding, venue access, or educational network your organization brings to this initiative."
+                    />
+                  </label>
+
+                  <label className="wide">
+                    Expected Outcomes (Optional)
+                    <textarea
+                      rows={3}
+                      value={expectedImpact}
+                      onChange={(e) => setExpectedImpact(e.target.value)}
+                      placeholder="Specify target numbers of women/youth reached, schools onboarded, publications anticipated, or policy outcomes."
+                    />
+                  </label>
+
+                  <label className="wide">
+                    Additional Information (Optional)
+                    <textarea
+                      rows={2}
+                      value={additionalNotes}
+                      onChange={(e) => setAdditionalNotes(e.target.value)}
+                      placeholder="Any relevant existing grants, previous collaborations, or special governance considerations."
+                    />
+                  </label>
+                </div>
+
+                <div className="form-consent-box">
+                  <label className="consent">
+                    <input
+                      type="checkbox"
+                      checked={authorizedConsent}
+                      onChange={(e) => setAuthorizedConsent(e.target.checked)}
+                    />
+                    <span>
+                      I confirm that the information provided is accurate and that I am authorized to submit this enquiry on behalf of the organization, where applicable.
+                    </span>
+                  </label>
+                  {formAttempted && !authorizedConsent && (
+                    <span className="field-error" style={{ display: "block", marginTop: 6 }}>
+                      Confirmation and authorization are required to proceed.
                     </span>
                   )}
-                </label>
+                </div>
 
-                <label className="wide">
-                  Anticipated Contribution / Resources Provided *
-                  <textarea
-                    required
-                    rows={3}
-                    value={contribution}
-                    onChange={(e) => setContribution(e.target.value)}
-                    placeholder="Detail the technical expertise, staff time, funding, venue access, or educational network your organization brings to this initiative."
-                  />
-                  {formAttempted && !contribution.trim() && (
-                    <span className="field-error">Contribution details are required.</span>
-                  )}
-                </label>
-
-                <label className="wide">
-                  Expected Impact &amp; Target Beneficiaries *
-                  <textarea
-                    required
-                    rows={3}
-                    value={expectedImpact}
-                    onChange={(e) => setExpectedImpact(e.target.value)}
-                    placeholder="Specify target numbers of women/youth reached, schools onboarded, publications anticipated, or policy outcomes."
-                  />
-                  {formAttempted && !expectedImpact.trim() && (
-                    <span className="field-error">Expected impact is required.</span>
-                  )}
-                </label>
-
-                <label className="wide">
-                  Additional Institutional Notes (Optional)
-                  <textarea
-                    rows={2}
-                    value={additionalNotes}
-                    onChange={(e) => setAdditionalNotes(e.target.value)}
-                    placeholder="Any relevant existing grants, previous collaborations, or special governance considerations."
-                  />
-                </label>
-              </div>
-
-              <div className="form-consent-box">
-                <label className="consent">
-                  <input
-                    type="checkbox"
-                    checked={authorizedConsent}
-                    onChange={(e) => setAuthorizedConsent(e.target.checked)}
-                  />
-                  <span>
-                    I confirm that I am authorized to submit this partnership
-                    enquiry on behalf of my organization and agree to Atlas AI
-                    Institute's safeguarding, privacy-by-design, and governance
-                    principles.
-                  </span>
-                </label>
-                {formAttempted && !authorizedConsent && (
-                  <span className="field-error" style={{ display: "block", marginTop: 6 }}>
-                    Authorization confirmation is required to proceed.
-                  </span>
-                )}
-              </div>
-
-              {/* Submission Dispatch Section */}
-              <div className="submission-dispatch-box">
-                <div className="dispatch-notice">
-                  <Info size={18} />
-                  <div>
-                    <strong>Direct Institutional Transmission</strong>
-                    <p>
-                      In adherence to Atlas AI Institute data sovereignty and
-                      safeguarding guidelines, partnership proposals are
-                      transmitted directly to our official institutional mailbox
-                      without intermediate third-party marketing storage.
-                    </p>
+                {submitStatus === "error" && (
+                  <div style={{ background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "10px", padding: "14px", color: "#991b1b", fontSize: "13.5px", display: "flex", gap: "10px", alignItems: "center", marginBottom: "20px" }}>
+                    <AlertCircle size={20} />
+                    <span>{submitErrorMessage || "Your partnership proposal could not be submitted. Please try again or contact contact@atlasai.institute."}</span>
                   </div>
-                </div>
-
-                <div className="dispatch-actions">
-                  <a
-                    href={isFormValid ? mailtoLink : undefined}
-                    onClick={(e) => {
-                      if (!isFormValid) {
-                        e.preventDefault();
-                        setFormAttempted(true);
-                      }
-                    }}
-                    className={`button primary ${!isFormValid ? "is-disabled" : ""}`}
-                  >
-                    <Mail size={16} /> Email Formal Proposal to Institute
-                  </a>
-
-                  <button
-                    type="button"
-                    className="button secondary"
-                    onClick={handleCopyProposal}
-                  >
-                    <Copy size={16} />
-                    {copied ? "Copied Proposal to Clipboard!" : "Copy Structured Proposal"}
-                  </button>
-                </div>
-
-                {copied && (
-                  <p className="copy-success-message">
-                    <CheckCircle2 size={16} /> All filled proposal details copied
-                    to clipboard! You may attach this directly in your official
-                    institutional email to contact@atlasai.institute.
-                  </p>
                 )}
-              </div>
-            </form>
+
+                {/* Submission Dispatch Section */}
+                <div className="submission-dispatch-box">
+                  <div className="dispatch-notice">
+                    <Info size={18} />
+                    <div>
+                      <strong>Direct Institutional Transmission</strong>
+                      <p>
+                        In adherence to Atlas AI Institute data sovereignty and
+                        safeguarding guidelines, partnership proposals are
+                        transmitted securely via Web3Forms to our official
+                        institutional mailbox.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="dispatch-actions" style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="button primary"
+                      style={{ flex: 1, justifyContent: "center" }}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 size={16} className="animate-spin" /> Submitting Proposal...
+                        </>
+                      ) : (
+                        <>
+                          Submit Partnership Proposal <ArrowRight size={16} />
+                        </>
+                      )}
+                    </button>
+
+                    <button
+                      type="button"
+                      className="button secondary"
+                      onClick={handleCopyProposal}
+                    >
+                      <Copy size={16} />
+                      {copied ? "Copied Proposal!" : "Copy Proposal Text"}
+                    </button>
+                  </div>
+
+                  {copied && (
+                    <p className="copy-success-message">
+                      <CheckCircle2 size={16} /> All filled proposal details copied
+                      to clipboard! You may also attach this directly in your official
+                      institutional email to contact@atlasai.institute.
+                    </p>
+                  )}
+                </div>
+              </form>
+            )}
           </div>
 
           {/* SIDEBAR: CONTACT & SUMMARY */}

@@ -11,6 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import { Link } from "wouter";
+import { GeneralContactForm } from "../components/GeneralContactForm";
 import "../homeEditorial.css";
 
 const CHALLENGE_CARDS = [
@@ -925,44 +926,48 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="contact-desk-card">
-            <h3>Partnerships &amp; Grants Desk</h3>
-            <p>
-              For concept notes, grant inquiries, academic pilot proposals, or
-              corporate ESG collaborations, contact the Atlas AI Institute
-              program team directly.
-            </p>
-            <div className="contact-desk-rows">
-              <div>
-                <strong>Initiative:</strong> Women Safety in the AI Era (Atlas AI
-                Institute)
-              </div>
-              <div>
-                <strong>Official Email:</strong>{" "}
-                <a href="mailto:contact@atlasai.institute">
-                  contact@atlasai.institute
-                </a>
-              </div>
-              <div>
-                <strong>Institute Portal:</strong>{" "}
-                <a
-                  href="https://atlasai.institute"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  atlasai.institute
-                </a>
-              </div>
-              <div>
-                <strong>Institutional &amp; Expert Network:</strong>{" "}
-                <Link href="/network">Request Reviewer Verification</Link>
-              </div>
-              <div>
-                <strong>Public Registry &amp; Verification:</strong>{" "}
-                <Link href="/certificate">Verify Credentials</Link> ·{" "}
-                <Link href="/support">Support Directory</Link>
+          <div style={{ display: "grid", gap: "28px" }}>
+            <div className="contact-desk-card">
+              <h3>Partnerships &amp; Grants Desk</h3>
+              <p>
+                For concept notes, grant inquiries, academic pilot proposals, or
+                corporate ESG collaborations, contact the Atlas AI Institute
+                program team directly.
+              </p>
+              <div className="contact-desk-rows">
+                <div>
+                  <strong>Initiative:</strong> Women Safety in the AI Era (Atlas AI
+                  Institute)
+                </div>
+                <div>
+                  <strong>Official Email:</strong>{" "}
+                  <a href="mailto:contact@atlasai.institute">
+                    contact@atlasai.institute
+                  </a>
+                </div>
+                <div>
+                  <strong>Institute Portal:</strong>{" "}
+                  <a
+                    href="https://atlasai.institute"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    atlasai.institute
+                  </a>
+                </div>
+                <div>
+                  <strong>Institutional &amp; Expert Network:</strong>{" "}
+                  <Link href="/network">Request Reviewer Verification</Link>
+                </div>
+                <div>
+                  <strong>Public Registry &amp; Verification:</strong>{" "}
+                  <Link href="/certificate">Verify Credentials</Link> ·{" "}
+                  <Link href="/support">Support Directory</Link>
+                </div>
               </div>
             </div>
+
+            <GeneralContactForm />
           </div>
         </div>
       </section>
