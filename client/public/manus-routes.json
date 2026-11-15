@@ -1,0 +1,64 @@
+{
+  "routes": [
+    {
+      "path": "/"
+    },
+    {
+      "path": "/support"
+    },
+    {
+      "path": "/emergency"
+    },
+    {
+      "path": "/resources"
+    },
+    {
+      "path": "/courses"
+    },
+    {
+      "path": "/school-programme"
+    },
+    {
+      "path": "/certificate"
+    },
+    {
+      "path": "/verify/:id"
+    },
+    {
+      "path": "/clubs/register"
+    },
+    {
+      "path": "/join"
+    },
+    {
+      "path": "/clubs"
+    },
+    {
+      "path": "/about"
+    },
+    {
+      "path": "/network/apply"
+    },
+    {
+      "path": "/network"
+    },
+    {
+      "path": "/login"
+    },
+    {
+      "path": "/signup"
+    },
+    {
+      "path": "/admin/certificates"
+    },
+    {
+      "path": "/admin/phase2"
+    },
+    {
+      "path": "/admin"
+    },
+    {
+      "path": "/404"
+    }
+  ]
+}

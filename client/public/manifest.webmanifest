@@ -1,0 +1,17 @@
+{
+  "name": "Women Safety in AI Era",
+  "short_name": "WSAI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fdfcfe",
+  "theme_color": "#0f1b4c",
+  "description": "Women Safety in AI Era by Atlas AI Institute — Bangla-first digital safety, rights, courses, and support navigation for women and girls in Bangladesh.",
+  "lang": "bn",
+  "icons": [
+    {
+      "src": "/wsai-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

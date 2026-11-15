@@ -1,0 +1,6 @@
+{
+  "name": "Women Safety in AI Era",
+  "description": "Bangla-first digital safety, rights, courses, and support navigation for women and girls in Bangladesh by Atlas AI Institute.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

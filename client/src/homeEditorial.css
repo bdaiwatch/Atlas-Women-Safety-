@@ -1,0 +1,835 @@
+/* Publication-ready International Development & Institutional Homepage Styles */
+
+.home-shell {
+  color: var(--ink);
+}
+
+.home-section {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 76px 5vw;
+  border-top: 1px solid var(--line);
+}
+
+.home-section.is-tinted {
+  max-width: none;
+  background: #f7f4fa;
+  border-top: 1px solid #e7e1ee;
+  border-bottom: 1px solid #e7e1ee;
+}
+
+.home-section.is-tinted > .home-section-inner {
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+.home-section.is-navy {
+  max-width: none;
+  background: var(--navy);
+  color: #eef2ff;
+  border-top: 0;
+}
+
+.home-section.is-navy > .home-section-inner {
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+.section-index-row {
+  display: grid;
+  grid-template-columns: minmax(190px, 0.34fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+
+.section-kicker-label {
+  margin: 4px 0 0;
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--plum);
+}
+
+.is-navy .section-kicker-label {
+  color: var(--gold);
+}
+
+.section-head-stack {
+  max-width: 74ch;
+}
+
+.section-head-stack h2 {
+  font-family: "Playfair Display", "Noto Serif Bengali", serif;
+  font-size: clamp(28px, 3.2vw, 42px);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: var(--navy);
+  margin: 0 0 16px;
+  text-wrap: balance;
+}
+
+.is-navy .section-head-stack h2 {
+  color: #ffffff;
+}
+
+.section-lead {
+  font-family: "DM Sans", sans-serif;
+  font-size: 16.5px;
+  line-height: 1.72;
+  color: #3b405a;
+  margin: 0;
+  max-width: 68ch;
+}
+
+.is-navy .section-lead {
+  color: #d6defa;
+}
+
+/* 1. Institutional Hero */
+.home-hero {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 64px 5vw 72px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+  gap: 56px;
+  align-items: stretch;
+}
+
+.home-hero-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.home-hero-eyebrow {
+  margin: 0 0 14px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--plum);
+}
+
+.home-hero h1 {
+  margin: 0 0 14px;
+  font-family: "Playfair Display", "Noto Serif Bengali", serif;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  color: var(--navy);
+  text-wrap: balance;
+}
+
+.home-hero-subtitle {
+  margin: 0 0 18px;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--plum);
+  text-wrap: balance;
+}
+
+.home-hero-mission {
+  margin: 0 0 28px;
+  font-size: 16px;
+  line-height: 1.72;
+  color: #333952;
+  max-width: 62ch;
+}
+
+.home-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.home-hero-actions .button {
+  white-space: nowrap;
+}
+
+.home-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: #505670;
+}
+
+.home-hero-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.home-hero-rail {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #dfd8e7;
+  border-radius: 18px;
+  background: #ffffff;
+  padding: 24px;
+}
+
+.home-hero-rail-head {
+  padding-bottom: 14px;
+  border-bottom: 1px solid #ece7f2;
+  margin-bottom: 6px;
+}
+
+.home-hero-rail-head p {
+  margin: 0 0 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--plum);
+}
+
+.home-hero-rail-head strong {
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  color: var(--navy);
+}
+
+.home-rail-link {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 18px;
+  gap: 12px;
+  align-items: center;
+  padding: 15px 4px;
+  border-bottom: 1px solid #efebf4;
+  transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.home-rail-link:last-of-type {
+  border-bottom: 0;
+}
+
+.home-rail-link:hover {
+  transform: translateX(3px);
+}
+
+.home-rail-link:hover b {
+  color: var(--plum);
+}
+
+.home-rail-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #f5effa;
+  color: var(--plum);
+}
+
+.home-rail-link.is-urgent .home-rail-icon {
+  background: #fdf0f2;
+  color: #9f2d47;
+}
+
+.home-rail-link b {
+  display: block;
+  font-size: 15px;
+  color: var(--navy);
+  margin-bottom: 2px;
+}
+
+.home-rail-link small {
+  display: block;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #555b73;
+}
+
+.home-rail-note {
+  margin-top: 12px;
+  padding-top: 14px;
+  border-top: 1px solid #ece7f2;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #555b73;
+}
+
+/* 2. The Global Challenge */
+.challenge-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.challenge-card {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.challenge-card-num {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--plum);
+  margin-bottom: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.challenge-card h3 {
+  margin: 0 0 10px;
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  line-height: 1.25;
+  color: var(--navy);
+}
+
+.challenge-card p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #464c66;
+}
+
+/* 3. Mission & Mandate Split */
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.mission-block {
+  padding: 24px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.mission-block h3 {
+  margin: 0 0 8px;
+  font-family: "Playfair Display", serif;
+  font-size: 19px;
+  color: var(--navy);
+}
+
+.mission-block p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.68;
+  color: #464c66;
+}
+
+/* 4. Our Program Architecture */
+.program-components-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.program-component-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 26px;
+  border: 1px solid #e3dceb;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.program-component-card .component-meta {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--plum);
+  margin-bottom: 10px;
+}
+
+.program-component-card h3 {
+  margin: 0 0 10px;
+  font-family: "Playfair Display", serif;
+  font-size: 21px;
+  color: var(--navy);
+}
+
+.program-component-card p {
+  margin: 0 0 18px;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #464c66;
+}
+
+.beneficiaries-strip {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid #dfd7e7;
+  display: grid;
+  grid-template-columns: minmax(180px, 0.32fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.beneficiaries-strip > strong {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--navy);
+}
+
+.beneficiaries-strip > p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #3c425c;
+}
+
+/* 5. Strategic Pillars */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.pillar-card {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.pillar-num {
+  display: block;
+  font-family: "DM Sans", sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--plum);
+  margin-bottom: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pillar-card h3 {
+  margin: 0 0 10px;
+  font-family: "Playfair Display", serif;
+  font-size: 19px;
+  line-height: 1.3;
+  color: var(--navy);
+}
+
+.pillar-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #484e68;
+}
+
+/* 6. Theory of Change */
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.toc-step {
+  padding: 22px;
+  border: 1px solid #e3dceb;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.toc-step-label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--plum);
+  margin-bottom: 8px;
+}
+
+.toc-step h3 {
+  margin: 0 0 10px;
+  font-family: "Playfair Display", serif;
+  font-size: 19px;
+  color: var(--navy);
+}
+
+.toc-step p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.62;
+  color: #484e68;
+}
+
+/* 7. SDG Alignment */
+.sdg-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.sdg-card {
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sdg-card .sdg-code {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.sdg-card h3 {
+  margin: 0 0 8px;
+  font-family: "Playfair Display", serif;
+  font-size: 21px;
+  color: #ffffff;
+}
+
+.sdg-card p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #d6defa;
+}
+
+/* 8. Expected Impact (Proposed Indicators Only) */
+.impact-disclaimer {
+  margin-top: 22px;
+  padding: 14px 18px;
+  border: 1px solid #d9d0e4;
+  border-radius: 12px;
+  background: #faf7fc;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #363c56;
+}
+
+.impact-disclaimer strong {
+  color: var(--navy);
+}
+
+.impact-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.impact-metric-card {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.impact-metric-tag {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--plum);
+  margin-bottom: 10px;
+}
+
+.impact-metric-value {
+  display: block;
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 8px;
+}
+
+.impact-metric-card h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.impact-metric-card p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #4f556e;
+}
+
+.evaluation-row {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: minmax(180px, 0.34fr) minmax(0, 1fr);
+  gap: 24px;
+}
+
+.evaluation-row strong {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--navy);
+}
+
+.evaluation-row p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.68;
+  color: #3d435d;
+}
+
+/* 9 & 10. Partnerships & Funding */
+.partner-audience-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.partner-card {
+  padding: 24px;
+  border: 1px solid #e3dceb;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.partner-card h3 {
+  margin: 0 0 8px;
+  font-family: "Playfair Display", serif;
+  font-size: 19px;
+  color: var(--navy);
+}
+
+.partner-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #484e68;
+}
+
+.funding-split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.funding-panel {
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.funding-panel h3 {
+  margin: 0 0 14px;
+  font-family: "Playfair Display", serif;
+  font-size: 21px;
+  color: var(--navy);
+}
+
+.funding-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.funding-list li {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #3b405a;
+}
+
+.funding-list li svg {
+  margin-top: 3px;
+  color: var(--plum);
+}
+
+.org-facts-dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 24px;
+  margin: 26px 0 0;
+  padding: 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #faf8fc;
+}
+
+.org-facts-dl dt {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--plum);
+  margin-bottom: 4px;
+}
+
+.org-facts-dl dd {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--navy);
+  font-weight: 500;
+}
+
+/* 11. Safeguarding Grid */
+.safeguard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.safeguard-item {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.safeguard-item h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-family: "Playfair Display", serif;
+  color: var(--navy);
+}
+
+.safeguard-item p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.62;
+  color: #484e68;
+}
+
+/* 12. Final Call to Action & Contact */
+.final-cta-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.final-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.final-cta-actions .button {
+  white-space: nowrap;
+}
+
+.contact-desk-card {
+  padding: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.contact-desk-card h3 {
+  margin: 0 0 12px;
+  font-family: "Playfair Display", serif;
+  font-size: 21px;
+  color: #ffffff;
+}
+
+.contact-desk-card p {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #d6defa;
+}
+
+.contact-desk-rows {
+  display: grid;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 13.5px;
+  color: #eef2ff;
+}
+
+.contact-desk-rows a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1080px) {
+  .home-hero,
+  .section-index-row,
+  .final-cta-panel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .toc-grid,
+  .impact-metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .challenge-grid,
+  .pillars-grid,
+  .safeguard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .home-section {
+    padding: 54px 20px;
+  }
+
+  .home-hero {
+    padding: 42px 20px 52px;
+  }
+
+  .challenge-grid,
+  .mission-grid,
+  .program-components-grid,
+  .pillars-grid,
+  .toc-grid,
+  .sdg-grid,
+  .impact-metrics-grid,
+  .partner-audience-grid,
+  .funding-split,
+  .org-facts-dl,
+  .safeguard-grid,
+  .beneficiaries-strip,
+  .evaluation-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-hero-actions .button,
+  .final-cta-actions .button {
+    width: 100%;
+    justify-content: center;
+  }
+}
